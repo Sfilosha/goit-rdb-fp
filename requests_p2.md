@@ -106,3 +106,15 @@ from infectious_cases ic
 join entities e on ic.entity = e.entity_name and ic.Code = e.entity_code
 join diseases d on d.disease_name = 'cholera'
 where ic.Number_cholera_cases is not null and ic.Number_cholera_cases != ''
+
+-- check total cases by disease
+
+select  
+ d.id as disease_id,  
+ d.disease_name,  
+ floor(sum(data.number)) as total_cases,
+floor(avg(data.number)) as avg_cases_per_year
+from data
+join diseases d on data.disease_id = d.id
+group by d.id, d.disease_name
+order by disease_id asc
